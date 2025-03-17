@@ -3,10 +3,7 @@ import Phaser from "phaser";
 export class SceneSelector extends Phaser.Scene {
 
     parts = {
-        '1': "Basic Player Movement",
-        '2': "Interpolation",
-        '3': "Client-predicted Input",
-        '4': "Fixed Tickrate",
+        'platformer': "2D Platformer Game",
     };
 
     constructor() {
@@ -18,7 +15,6 @@ export class SceneSelector extends Phaser.Scene {
         this.cameras.main.setBackgroundColor(0x000000);
 
         // preload demo assets
-        // this.load.image('ship_0001', 'assets/ship_0001.png');
         this.load.image('ship_0001', 'https://cdn.glitch.global/3e033dcd-d5be-4db4-99e8-086ae90969ec/ship_0001.png?v=1649945243288');
     }
 
@@ -32,26 +28,47 @@ export class SceneSelector extends Phaser.Scene {
         const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
             color: "#ff0000",
             fontSize: "32px",
-            // fontSize: "24px",
             fontFamily: "Arial"
         };
 
-        for (let partNum in this.parts) {
-            const index = parseInt(partNum) - 1;
-            const label = this.parts[partNum];
+        // Add title text
+        this.add.text(400, 100, "2D Multiplayer Platformer", textStyle)
+            .setOrigin(0.5, 0.5)
+            .setFontSize(48);
 
-            // this.add.text(32, 32 + 32 * index, `Part ${partNum}: ${label}`, textStyle)
-            this.add.text(130, 150 + 70 * index, `Part ${partNum}: ${label}`, textStyle)
-                .setInteractive()
-                .setPadding(6)
-                .on("pointerdown", () => {
-                    this.runScene(`part${partNum}`);
-                });
-        }
+        // Only show our platformer game option
+        this.add.text(400, 300, this.parts['platformer'], textStyle)
+            .setOrigin(0.5, 0.5)
+            .setInteractive()
+            .setPadding(6)
+            .on("pointerdown", () => {
+                this.runScene("platformer");
+            });
+            
+        // Add instructions
+        const instructionStyle = {
+            color: "#ffffff",
+            fontSize: "20px",
+            fontFamily: "Arial"
+        };
+        
+        this.add.text(400, 400, "Controls:", instructionStyle)
+            .setOrigin(0.5, 0.5);
+            
+        this.add.text(400, 430, "A/Left Arrow: Move Left", instructionStyle)
+            .setOrigin(0.5, 0.5);
+            
+        this.add.text(400, 460, "D/Right Arrow: Move Right", instructionStyle)
+            .setOrigin(0.5, 0.5);
+            
+        this.add.text(400, 490, "Space/Up Arrow: Jump", instructionStyle)
+            .setOrigin(0.5, 0.5);
+            
+        this.add.text(400, 530, "Goal: Reach the right side of the screen", instructionStyle)
+            .setOrigin(0.5, 0.5);
     }
 
     runScene(key: string) {
         this.game.scene.switch("selector", key)
     }
-
 }

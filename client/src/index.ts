@@ -1,10 +1,12 @@
 import Phaser from "phaser";
+import { GRAVITY_X, GRAVITY_Y } from "shared";
 
 import { SceneSelector } from "./scenes/SceneSelector";
 import { Part1Scene } from "./scenes/Part1Scene";
 import { Part2Scene } from "./scenes/Part2Scene";
 import { Part3Scene } from "./scenes/Part3Scene";
 import { Part4Scene } from "./scenes/Part4Scene";
+import { PlatformerScene } from "./scenes/PlatformerScene";
 
 import { BACKEND_HTTP_URL } from "./backend";
 
@@ -21,10 +23,14 @@ const config: Phaser.Types.Core.GameConfig = {
     backgroundColor: '#b6d53c',
     parent: 'phaser-example',
     physics: {
-        default: "arcade"
+        default: "matter",
+        matter: {
+            debug: true,
+            gravity: { x: GRAVITY_X, y: GRAVITY_Y }
+        }
     },
     pixelArt: true,
-    scene: [SceneSelector, Part1Scene, Part2Scene, Part3Scene, Part4Scene],
+    scene: [SceneSelector, Part1Scene, Part2Scene, Part3Scene, Part4Scene, PlatformerScene],
 };
 
 const game = new Phaser.Game(config);
@@ -59,7 +65,7 @@ fpsInput.oninput = function(event: InputEvent) {
 /**
  * Create latency simulation selector
  */
-let fetchLatencySimulationInterval: number;
+let fetchLatencySimulationInterval: ReturnType<typeof setInterval>;
 
 // latency simulation label
 const latencyInput = document.querySelector<HTMLInputElement>("input#latency");
