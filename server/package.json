@@ -34,8 +34,11 @@
     "@colyseus/monitor": "^0.16.0",
     "@colyseus/playground": "^0.16.0",
     "@colyseus/tools": "^0.16.0",
+    "@types/matter-js": "^0.19.8",
     "colyseus": "^0.16.0",
     "cors": "^2.8.5",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "matter-js": "^0.20.0",
+    "shared": "file:../shared"
   }
 }
